@@ -1,14 +1,12 @@
-import express, { Application, Request, Response, NextFunction } from "express";
-import routes from "routes";
+import "dotenv/config";
+import createApp from "app";
 
-export default function createServer() {
-    const app: Application = express();
-
-    app.get("/", (req: Request, res: Response, next: NextFunction) => {
-        res.send("Hello world!");
+const startServer = () => {
+    const app = createApp();
+    const port: number = parseInt(<string>process.env.PORT, 10) || 4000;
+    app.listen(port, () => {
+        console.log(`[server]: ⚡⚡Server is running at port ${port}`);
     });
+};
 
-    app.use(routes);
-
-    return app;
-}
+startServer();

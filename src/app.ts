@@ -1,13 +1,20 @@
-import "dotenv/config";
 import express, { Application, Request, Response, NextFunction } from "express";
-import createServer from "server";
+import routes from "routes";
 
-const startServer = () => {
-    const app = createServer();
-    const port: number = parseInt(<string>process.env.PORT, 10) || 4000;
-    app.listen(port, () => {
-        console.log(`[server]: ⚡⚡Server is running at port ${port}`);
+export default function createApp() {
+    const app: Application = express();
+
+    // middleware to allow json parsing
+    app.use(express.json());
+
+    // create application/x-www-form-urlencoded parser
+    app.use(express.urlencoded({ extended: false }))
+    
+    app.get("/", (req: Request, res: Response, next: NextFunction) => {
+        res.send("Hello world!");
     });
-};
 
-startServer();
+    app.use("/api/v1", routes);
+
+    return app;
+}
