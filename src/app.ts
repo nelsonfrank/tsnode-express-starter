@@ -1,5 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from "express";
-import routes from "routes";
+import routes from "./v1/routes";
 
 export default function createApp() {
     const app: Application = express();
